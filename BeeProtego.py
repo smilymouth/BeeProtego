@@ -147,9 +147,6 @@ def add_placeholder(entry, placeholder_text):
 def get_file_path():
     path = file_entry.get().strip()
 
-def get_file_path():
-    path = file_entry.get().strip()
-
     if not path:
         log_box2.insert(tk.END, "[ERROR] File path not entered.\n")
         log_box2.insert(tk.END, "👉 Please enter the file path in Scan window.\n\n")
@@ -292,37 +289,30 @@ def run_all_yara_rules(yara_path, yara_rules_list, target_file):
             return False
 
         rule_path = os.path.abspath(rule_file)
+        cmd = [yara_path, "-q", rule_path, target_file]
 
-        cmd = [yara_path, rule_path, target_file]
-
-        process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            creationflags=subprocess.CREATE_NO_WINDOW
-        )
-
-        while process.poll() is None:
-            if stop_requested:
-                process.terminate()
-                return False
-            while scan_paused:
-                time.sleep(0.2)
-                
-            time.sleep(0.1)
-        output = process.stdout.read()
-
-        if output.strip():
-            log_box2.insert(
-                tk.END,
-                f"🚨 YARA MATCH ({os.path.basename(rule_file)})\n{output}\n",
-                "red_text"
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                creationflags=subprocess.CREATE_NO_WINDOW
             )
-            return True
+
+            if result.stdout.strip():
+                log_box2.insert(
+                    tk.END,
+                    f"🚨 YARA MATCH ({os.path.basename(rule_file)})\n",
+                    "red_text"
+                )
+                return True
+
+        except Exception as e:
+            log_box2.insert(tk.END, f"[YARA ERROR] {e}\n")
 
     log_box2.insert(tk.END, "[YARA] No match\n", "green_text")
     return False
+
 def start_full_scan():
     global scan_paused, stop_requested
 
@@ -394,21 +384,6 @@ def full_directory_scan(dir_path):
 
 def load_rules():
     return [
-        "MZ",
-        "PK",
-        "7z",
-        "Rar!",
-        "cab",
-        "exe",
-        "dll",
-        "scr",
-        "pif",
-        "bat",
-        "cmd",
-        "vbs",
-        "js",
-        "wsf",
-        "jar",
         "cmd.exe",
         "powershell",
         "WScript.Shell",
@@ -504,18 +479,12 @@ def load_rules():
         "RegDeleteKey",
         "TaskScheduler",
         "ScheduledTask",
-        "socket",
-        "connect",
-        "send",
-        "recv",
-        "bind",
         "listen",
         "accept",
         "WSAStartup",
         "InternetConnect",
         "InternetWriteFile",
         "WinSock",
-        "C2",
         "CommandAndControl",
         "DebugBreak",
         "DbgPrint",
@@ -741,6 +710,14 @@ def resume_scan():
         log_box2.see(tk.END)
     ))
 
+def quick_scan():
+    path = get_file_path()
+    if not path:
+        return
+
+    scan_file_with_rules(path, rules)
+    Scan_file()
+
 
 def stop_scan():
     global stop_requested, scan_paused
@@ -751,6 +728,22 @@ def stop_scan():
         log_box2.insert(tk.END, "[!] Scan stopped by user\n"),
         log_box2.see(tk.END)
     ))
+
+def targeted_scan():
+    global stop_requested, scan_paused
+
+    stop_requested = False
+    scan_paused = False
+
+    path = get_file_path()
+    if not path:
+        return
+
+    scan_file_with_rules(path, rules)
+    Scan_file()
+    run_all_yara_rules(yara_exe, yara_rules, path)
+
+
 
 top_frame = tk.Frame(root, bg="#231f20")
 top_frame.grid(row=0, column=0, columnspan=3, sticky="ew")
@@ -948,10 +941,9 @@ Quick_scan = tk.Button(
     bg="#FFF600",
     height=5,
     width=30,
-    command=lambda: run_scan_thread(
-        lambda: (scan_file_with_rules(get_file_path(), rules), Scan_file())
+    command=lambda: run_scan_thread(quick_scan)
     )
-)
+
 Quick_scan.pack(fill="x", padx=10, pady=10,side="left")
 
 Target_scan = tk.Button(
@@ -962,14 +954,10 @@ Target_scan = tk.Button(
     bg="#FFF600",
     height=5,
     width=30,
-    command=lambda: run_scan_thread(
-        lambda: (
-            scan_file_with_rules(get_file_path(), rules),
-            Scan_file(),
-            run_all_yara_rules(yara_exe, yara_rules, get_file_path())
-        )
+    command=lambda: run_scan_thread(targeted_scan)
+    
     )
-)
+
 Target_scan.pack(fill="x", padx=10, pady=10,side="left")
 
 
