@@ -254,7 +254,7 @@ MIT License
 
 <h2>Author</h2>
 
-The Smiley Moon<br>
+smilymouth <br>
 Cybersecurity Researcher
 
 </div>
