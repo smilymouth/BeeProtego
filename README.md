@@ -1,6 +1,5 @@
 <div style="font-family:Arial, Helvetica, sans-serif; max-width:1100px; margin:auto; line-height:1.6">
 
-<img src="banner.png" alt="Project Banner" width="600">
 
 <h1 align="center">Bee Protego</h1>
 
