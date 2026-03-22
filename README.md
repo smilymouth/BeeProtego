@@ -246,6 +246,11 @@ The AI assistant can analyze detected threats and provide explanations for malwa
 </ul>
 
 <hr>
+<h2>Preview</h2>
+<img src="screenshot.jpg" width="700"/>
+</hr>
+
+<hr>
 
 <h2>License</h2>
 
