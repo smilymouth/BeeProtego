@@ -89,7 +89,7 @@ python BeeProtego.py
 
 <hr>
 
-<h2>Optional AI Integration</h2>
+<h2>AI Integration</h2>
 
 <div style="background:#eefaf1; padding:15px; border-left:5px solid #27ae60;">
 Local AI support using Ollama for threat explanation.
