@@ -1,266 +1,167 @@
-<div style="font-family:Arial, Helvetica, sans-serif; max-width:1100px; margin:auto; line-height:1.6">
-
+<div style="font-family:Arial, Helvetica, sans-serif; max-width:1100px; margin:auto; line-height:1.6; color:#222">
 
 <h1 align="center">Bee Protego</h1>
 
 <p align="center">
-Malware Detection and Security Analysis Toolkit
+Lightweight Malware Detection and Security Analysis Toolkit
 </p>
 
 <hr>
 
-<h2>Overview</h2>
+<div style="background:#f4f6f8; padding:15px; border-left:5px solid #2c3e50;">
+<strong>Overview</strong><br><br>
+Bee Protego is a lightweight cybersecurity toolkit designed for malware detection, file analysis, and security research.
+It uses YARA-based rule matching to identify malicious patterns in binaries, documents, and exploit files, combining scanning,
+detection, and reporting into a unified workflow.
+</div>
 
-<p>
-Bee Protego is a lightweight cybersecurity toolkit designed for malware scanning, threat detection, and security research. 
-The system uses rule-based detection powered by YARA signatures to identify suspicious binaries, malicious documents, 
-and exploit patterns. Bee Protego integrates scanning modules, rule databases, and reporting mechanisms into a single analysis pipeline.
+<br>
+
+<div style="background:#eef7ff; padding:15px; border-left:5px solid #2980b9;">
+<strong>Key Features</strong>
+<ul>
+<li>YARA-based detection engine</li>
+<li>Multi-file scanning</li>
+<li>Automated PDF reports</li>
+<li>Modular rule system</li>
+<li>Optional AI-based threat explanation</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Preview</h2>
+
+<p align="center">
+<img src="screenshot.jpg" width="700">
 </p>
+
+<hr>
+
+<h2>Quick Start</h2>
+
+<div style="background:#f8f8f8; padding:10px; border:1px solid #ddd;">
+<pre>
+git clone https://github.com/smilymouth/BeeProtego.git
+cd BeeProtego
+pip install -r requirements.txt
+python BeeProtego.py
+</pre>
+</div>
 
 <hr>
 
 <h2>System Requirements</h2>
 
-<table border="1" cellpadding="6">
-<tr>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; width:100%">
+<tr style="background:#2c3e50; color:white;">
 <th>Component</th>
 <th>Requirement</th>
 </tr>
-
-<tr>
-<td>Operating System</td>
-<td>Windows / Linux / macOS</td>
-</tr>
-
-<tr>
-<td>Python Version</td>
-<td>Python 3.9 or higher</td>
-</tr>
-
-<tr>
-<td>RAM</td>
-<td>Minimum 4 GB recommended</td>
-</tr>
-
-<tr>
-<td>Disk Space</td>
-<td>1 GB recommended for rule databases</td>
-</tr>
-
+<tr><td>Operating System</td><td>Windows / Linux / macOS</td></tr>
+<tr style="background:#f2f2f2;"><td>Python</td><td>3.9+</td></tr>
+<tr><td>Memory</td><td>4 GB recommended</td></tr>
+<tr style="background:#f2f2f2;"><td>Disk</td><td>1 GB for rules</td></tr>
 </table>
 
 <hr>
 
-<h2>Required Python Modules</h2>
+<h2>Dependencies</h2>
 
-<table border="1" cellpadding="6">
-
-<tr>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; width:100%">
+<tr style="background:#34495e; color:white;">
 <th>Module</th>
 <th>Purpose</th>
 </tr>
-
-<tr>
-<td>requests</td>
-<td>HTTP communication and API interaction</td>
-</tr>
-
-<tr>
-<td>reportlab</td>
-<td>PDF report generation</td>
-</tr>
-
-<tr>
-<td>yara-python</td>
-<td>YARA rule execution for malware detection</td>
-</tr>
-
+<tr><td>requests</td><td>API communication</td></tr>
+<tr style="background:#f2f2f2;"><td>reportlab</td><td>PDF generation</td></tr>
+<tr><td>yara-python</td><td>Detection engine</td></tr>
 </table>
 
-Install dependencies:
-
+<div style="background:#f8f8f8; padding:10px; border:1px solid #ddd; margin-top:10px;">
 <pre>
 pip install -r requirements.txt
 </pre>
+</div>
 
 <hr>
 
-<h2>External Dependencies</h2>
+<h2>Detection Flow</h2>
 
-<table border="1" cellpadding="6">
-
-<tr>
-<th>Tool</th>
-<th>Description</th>
-</tr>
-
-<tr>
-<td>YARA</td>
-<td>Pattern matching engine used for malware detection</td>
-</tr>
-
-</table>
-
-YARA executable must be located in the project directory.
+<div style="display:flex; justify-content:space-between; text-align:center; font-size:14px;">
+<div style="flex:1; background:#ecf0f1; padding:10px; margin:5px;">Input</div>
+<div style="flex:1; background:#d6eaf8; padding:10px; margin:5px;">Scan</div>
+<div style="flex:1; background:#d5f5e3; padding:10px; margin:5px;">Detect</div>
+<div style="flex:1; background:#fcf3cf; padding:10px; margin:5px;">Process</div>
+<div style="flex:1; background:#fadbd8; padding:10px; margin:5px;">Report</div>
+</div>
 
 <hr>
 
-<h2>Installation</h2>
+<h2>Performance Overview</h2>
 
-Clone the repository from GitHub.
-
-<pre>
-git clone https://github.com/smilymouth/BeeProtego.git
-cd BeeProtego
-</pre>
-
-Install required packages.
-
-<pre>
-pip install -r requirements.txt
-</pre>
-
-Run the application.
-
-<pre>
-python BeeProtego.py
-</pre>
-
-<hr>
-
-<h2>Project Structure</h2>
-
-<pre>
-BeeProtego
-│
-├── BeeProtego.py
-├── README.md
-├── LICENSE
-├── .gitignore
-│
-├── yara64.exe
-├── favicon.ico
-│
-├── full_sha256.txt
-│
-├── cve_rules
-│   └── CVE detection rules
-│
-├── maldocs
-│   └── malicious document detection rules
-│
-├── malware
-│   └── malware detection rules
-│
-├── cve_rules_index.yar
-├── maldocs_index.yar
-└── malware_index.yar
-</pre>
-
-<hr>
-
-<h2>Detection Workflow</h2>
-
-<pre>
-User Input
-   │
-   ▼
-File Enumeration
-   │
-   ▼
-YARA Rule Matching
-   │
-   ▼
-Threat Detection
-   │
-   ▼
-Result Processing
-   │
-   ▼
-Report Generation
-</pre>
-
-<hr>
-
-<h2>Generated Reports</h2>
-
-<table border="1" cellpadding="6">
-
-<tr>
-<th>Report Type</th>
-<th>Description</th>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; width:100%">
+<tr style="background:#2c3e50; color:white;">
+<th>Metric</th>
+<th>Value</th>
 </tr>
-
-<tr>
-<td>PDF Security Report</td>
-<td>Summary of detected threats and scan results</td>
-</tr>
-
-<tr>
-<td>Detection Log</td>
-<td>List of files that matched YARA rules</td>
-</tr>
-
+<tr><td>Scan Speed</td><td>Fast (depends on rules)</td></tr>
+<tr style="background:#f2f2f2;"><td>Accuracy</td><td>Rule-based precision</td></tr>
+<tr><td>Resource Usage</td><td>Low to moderate</td></tr>
 </table>
 
 <hr>
 
-<h2>Local AI Assistant (Optional)</h2>
+<h2>Reports</h2>
 
-Bee Protego can integrate with a local AI model to explain detected threats.
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; width:100%">
+<tr style="background:#34495e; color:white;">
+<th>Type</th>
+<th>Description</th>
+</tr>
+<tr><td>PDF Report</td><td>Detailed scan summary</td></tr>
+<tr style="background:#f2f2f2;"><td>Log File</td><td>Matched rules and files</td></tr>
+</table>
 
-Recommended local runtime:
+<hr>
 
-Ollama
+<h2>Optional AI Integration</h2>
 
-Installation:
+<div style="background:#eefaf1; padding:15px; border-left:5px solid #27ae60;">
+Local AI can explain detected threats using Ollama runtime.
+</div>
 
-<pre>
-https://ollama.ai
-</pre>
-
-Install model:
-
+<div style="background:#f8f8f8; padding:10px; border:1px solid #ddd; margin-top:10px;">
 <pre>
 ollama pull llama3
-</pre>
-
-Run local model:
-
-<pre>
 ollama run llama3
 </pre>
-
-The AI assistant can analyze detected threats and provide explanations for malware indicators.
+</div>
 
 <hr>
 
-<h2>Security Research Applications</h2>
+<h2>Use Cases</h2>
 
 <ul>
-<li>Malware analysis environments</li>
-<li>Exploit document detection</li>
+<li>Malware analysis</li>
+<li>Security research</li>
 <li>YARA rule testing</li>
-<li>Cybersecurity research</li>
-<li>Educational security labs</li>
+<li>Educational labs</li>
 </ul>
-
-<hr>
-<h2>Preview</h2>
-<img src="screenshot.jpg" width="700"/>
-</hr>
 
 <hr>
 
 <h2>License</h2>
 
-MIT License
+<p>MIT License</p>
 
 <hr>
 
 <h2>Author</h2>
 
-smilymouth <br>
+<p>
+smilymouth<br>
 Cybersecurity Researcher
+</p>
 
 </div>
